@@ -4,6 +4,7 @@ import Products from "./pages/Products"
 import Sales from "./pages/Sales"
 import Purchases from './pages/Purchases'
 import Layout from './layout/Layout'
+import Home from './pages/Home'
 
 
 const App = () => {
