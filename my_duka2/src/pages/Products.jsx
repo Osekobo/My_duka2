@@ -13,7 +13,7 @@ const Products = () => {
       })
   }, [])
   return (
-    <div>
+    <div> 
       <div>
         <ProductsHero />
       </div>
