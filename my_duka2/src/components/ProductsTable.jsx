@@ -33,6 +33,7 @@ const ProductsTable = () => {
             <th>Year</th>
             <th>Condition</th>
             <th>Fuel</th>
+            {/* <th>Created at</th> */}
           </tr>
         </thead>
 
@@ -47,6 +48,7 @@ const ProductsTable = () => {
               <td>{product.year}</td>
               <td>{product.condition}</td>
               <td>{product.fuel}</td>
+              {/* <td>{product.created_at}</td> */}
             </tr>
           ))}
         </tbody>
