@@ -1,21 +1,20 @@
 import { useState, useEffect } from "react"
-import getProduct from "../services/getProduct"
+import { getProduct } from "../services/getProduct"
 
-const useGetProduct = () => {
 
-  const [products, setProducts] = useState([])
+export const useGetProduct = () => {
+
+  const [productData, setProductData] = useState([])
 
   useEffect(() => {
-    getProduct()
-      .then(response => {
-        setProducts(response.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    const fetchProducts = async () => {
+      const data = await getProduct()
+      setProductData(data)
+    }
+    fetchProducts()
+
   }, [])
 
-  return products
-}
+  return {productData}
 
-export default useGetProduct
+}
