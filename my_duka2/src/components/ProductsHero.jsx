@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetProduct } from '../hooks/useGetProduct'
+import { useGetProduct } from '../hooks/useGetProducts'
 
 const ProductsHero = () => {
   const { productData } = useGetProduct()
