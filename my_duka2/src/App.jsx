@@ -5,6 +5,9 @@ import Sales from "./pages/Sales"
 import Purchases from './pages/Purchases'
 import Layout from './layout/Layout'
 import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
+
 
 
 
@@ -17,6 +20,8 @@ const App = () => {
           <Route path='/products' element={<Products />} />
           <Route path='/sales' element={<Sales />} />
           <Route path='/purchases' element={<Purchases />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
         </Route>
       </Routes>
     </div>

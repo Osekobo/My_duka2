@@ -12,6 +12,10 @@ const ProductsHero = () => {
             <p>{product.name}</p>
             <p>{product.buying_price}</p>
             <p>{product.selling_price}</p>
+            <p>{product.model}</p>
+            <p>{product.year}</p>
+            <p>{product.condition}</p>
+            <p>{product.fuel}</p>
           </div>
         ))
       }

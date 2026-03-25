@@ -10,6 +10,8 @@ const NavBar = () => {
         {/* <Link to='/product' className='text-gray-800 text-decoration-none'>Product</Link> */}
         <Link to='/purchases' className='text-gray-800 text-decoration-none'>Purchases</Link>
         <Link to='/sales' className='text-gray-800 text-decoration-none'>Sales</Link>
+        <Link to='/login' className='text-gray-800 text-decoration-none'>Login</Link>
+        <Link to='/register' className='text-gray-800 text-decoration-none'>Register</Link>
       </div>
     </nav>
   )
