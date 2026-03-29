@@ -1,21 +1,60 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import {
+  FaHome,
+  FaTachometerAlt,
+  FaBoxOpen,
+  FaShoppingCart,
+  FaCashRegister,
+  FaSignInAlt,
+  FaUserPlus,
+  FaStore
+} from 'react-icons/fa'
 
 const NavBar = () => {
   return (
     <nav className='bg-gray-200 p-4'>
-      <div className='flex gap-4'>
-        <Link to='/' className='text-gray-800 text-decoration-none'>Home</Link>
-        <Link to='/products' className='text-gray-800 text-decoration-none'>Products</Link>
-        {/* <Link to='/product' className='text-gray-800 text-decoration-none'>Product</Link> */}
-        <Link to='/purchases' className='text-gray-800 text-decoration-none'>Purchases</Link>
-        <Link to='/sales' className='text-gray-800 text-decoration-none'>Sales</Link>
-        <Link to='/login' className='text-gray-800 text-decoration-none'>Login</Link>
-        <Link to='/register' className='text-gray-800 text-decoration-none'>Register</Link>
+      <div className='flex items-center justify-between'>
+        <div>
+          <Link to='/' className='flex items-center gap-2 text-xl font-bold text-gray-800 no-underline'>
+            <FaStore />
+            MyDuka
+          </Link>
+        </div>
+        <div className='flex gap-6'>
+          <Link to='/' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition no-underline'>
+            <FaHome /> Home
+          </Link>
+
+          <Link to='/dashboard' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+            <FaTachometerAlt /> Dashboard
+          </Link>
+
+          <Link to='/products' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+            <FaBoxOpen /> Products
+          </Link>
+
+          <Link to='/purchases' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+            <FaShoppingCart /> Purchases
+          </Link>
+
+          <Link to='/sales' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+            <FaCashRegister /> Sales
+          </Link>
+        </div>
+        <div className='flex gap-4'>
+          <Link to='/login' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+            <FaSignInAlt /> Login
+          </Link>
+
+          <Link to='/register' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+            <FaUserPlus /> Register
+          </Link>
+        </div>
+
       </div>
     </nav>
   )
 }
-
 
 export default NavBar

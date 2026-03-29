@@ -9,7 +9,6 @@ const Products = () => {
 
   return (
     <div>
-
       <div>
         <ProductsHero products={productData} />
       </div>
