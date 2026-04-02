@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import { Protected } from "./components/Protected"
 
 
 
@@ -18,10 +19,12 @@ const App = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path='/' element={<Home />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/products' element={<Products />} />
-          <Route path='/sales' element={<Sales />} />
-          <Route path='/purchases' element={<Purchases />} />
+          <Route element={<Protected />}>
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/products' element={<Products />} />
+            <Route path='/sales' element={<Sales />} />
+            <Route path='/purchases' element={<Purchases />} />
+          </Route>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
         </Route>

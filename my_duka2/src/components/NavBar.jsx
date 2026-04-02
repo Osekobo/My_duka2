@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   FaHome,
   FaTachometerAlt,
@@ -12,8 +13,14 @@ import {
 } from 'react-icons/fa'
 
 const NavBar = () => {
+  const { user, isAthenticated, logout } = useAuth()
+  const navigate = useNavigate()
+  const handleLogout = async () => {
+    await logout()
+    navigate('/login')
+  }
   return (
-    <nav className='bg-gray-200 p-4'>
+    <nav className='bg-gray-300 p-4'>
       <div className='flex items-center justify-between'>
         <div>
           <Link to='/' className='flex items-center gap-2 text-xl font-bold text-gray-800 no-underline'>
@@ -25,6 +32,12 @@ const NavBar = () => {
           <Link to='/' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition no-underline'>
             <FaHome /> Home
           </Link>
+
+          {isAthenticated && (
+            <>
+              {/* Protectet routes */}
+            </>
+          )}
 
           <Link to='/dashboard' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
             <FaTachometerAlt /> Dashboard

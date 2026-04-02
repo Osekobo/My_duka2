@@ -73,7 +73,7 @@ export default function Footer() {
 }
 
 
-/* Reusable Components */
+
 
 function FooterLink({ children }) {
   return (
