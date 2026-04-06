@@ -1,13 +1,13 @@
 import React from 'react'
-import {Navigate,Outlet} from "../context/AuthContext"
-import { useAuth } from "../context/AuthContext"
+import { AuthProvider, useAuth } from "../context/AuthContext"
+// import { useAuth } from "../context/AuthContext"
 
-const Protected = () => {
+export const Protected = () => {
   const { isAuthenticated } = useAuth()
   if (!isAuthenticated) {
-    return <Navigate to='/login' replace />
+    return <AuthProvider to='/login' replace />
   }
-  return <Outlet/>
+  return <useAuth />
 }
 
-export default Protected
+// export default Protected

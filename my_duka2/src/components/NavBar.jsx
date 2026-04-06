@@ -13,7 +13,7 @@ import {
 } from 'react-icons/fa'
 
 const NavBar = () => {
-  const { user, isAthenticated, logout } = useAuth()
+  const { user, isAuthenticated, logout } = useAuth()
   const navigate = useNavigate()
   const handleLogout = async () => {
     await logout()
@@ -33,36 +33,41 @@ const NavBar = () => {
             <FaHome /> Home
           </Link>
 
-          {isAthenticated && (
+          {isAuthenticated && (
             <>
-              {/* Protectet routes */}
+              <Link to='/dashboard' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+                <FaTachometerAlt /> Dashboard
+              </Link>
+
+              <Link to='/products' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+                <FaBoxOpen /> Products
+              </Link>
+
+              <Link to='/purchases' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+                <FaShoppingCart /> Purchases
+              </Link>
+
+              <Link to='/sales' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+                <FaCashRegister /> Sales
+              </Link>
+            </>
+          )}
+          {!isAuthenticated ? (
+            <>
+              <Link to='/login' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+                <FaSignInAlt /> Login
+              </Link>
+
+              <Link to='/register' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
+                <FaUserPlus /> Register
+              </Link>
+            </>) : (
+            <>
+              <span> {user.email}</span>
+              <button onClick={handleLogout} className='bg-red-600 text-white rounded'> Logout </button>
             </>
           )}
 
-          <Link to='/dashboard' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
-            <FaTachometerAlt /> Dashboard
-          </Link>
-
-          <Link to='/products' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
-            <FaBoxOpen /> Products
-          </Link>
-
-          <Link to='/purchases' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
-            <FaShoppingCart /> Purchases
-          </Link>
-
-          <Link to='/sales' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
-            <FaCashRegister /> Sales
-          </Link>
-        </div>
-        <div className='flex gap-4'>
-          <Link to='/login' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
-            <FaSignInAlt /> Login
-          </Link>
-
-          <Link to='/register' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
-            <FaUserPlus /> Register
-          </Link>
         </div>
 
       </div>
