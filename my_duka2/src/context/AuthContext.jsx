@@ -27,6 +27,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     checkAuth()
   }, [])
+  const login = (userData) => {
+    setUser(userData)
+    setIsAuthenticated(true)
+  }
   // logging out
   const logout = async () => {
     try {
@@ -39,8 +43,16 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>)
 
 }
+
+
+// VITE_PRODUCTS_URL='http://127.0.0.1:8000/products'
+// VITE_PURCHASE_URL='http://127.0.0.1:8000/purchase'
+// VITE_SALES_URL='http://127.0.0.1:8000/sales'
+// VITE_DASHBOARD_URL='http://127.0.0.1:8000/dashboard/spp'
+// VITE_LOGIN_URL='http://127.0.0.1:8000/login'
+// VITE_API_URL='http://127.0.0.1:8000'

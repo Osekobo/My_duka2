@@ -1,9 +1,17 @@
 import React from 'react'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useLogin } from "../hooks/useLogin"
 
 const LoginForm = () => {
+  const navigate = useNavigate()
   const { user, handleChange, handleSubmit, loading, error } = useLogin()
+  const onSubmit = async (e) => {
+    const success = await handleSubmit(e)
+
+    if (success) {
+      navigate("/products")
+    }
+  }
   return (
     <div className='m-4 p-4'>
       <h3 className='text-xl font-bold bg-red-500  p-4'>Welcome to the Login page</h3>
@@ -26,7 +34,7 @@ const LoginForm = () => {
           </div>
 
           {/* Form */}
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={onSubmit}>
 
             <input
               type="email"

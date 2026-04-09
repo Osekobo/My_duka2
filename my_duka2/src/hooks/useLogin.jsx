@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { loginService } from "../services/loginService"
-import { useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
+// import { useNavigate } from "react-router-dom"
 
 
 export const useLogin = () => {
@@ -11,7 +12,8 @@ export const useLogin = () => {
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const navigate = useNavigate()
+  const { login } = useAuth()
+  // const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -27,10 +29,13 @@ export const useLogin = () => {
     setError(null)
     try {
       const res = await loginService(user)
-      console.log(res)
-      navigate("/dashboard")
+      // console.log(res)
+      console(res.user)
+      return true
+      // navigate("/products")
     } catch (err) {
       setError(err.response?.data?.detail || "Login failed")//handle backend,network and unknown errors
+      return false
     } finally {
       setLoading(false)
     }
