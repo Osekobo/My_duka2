@@ -3,13 +3,20 @@ import { createContext, useEffect, useState, useContext } from 'react'
 
 const url = import.meta.env.VITE_API_URL
 const AuthContext = createContext()
-export const useAuth = () => useContext(AuthContext)
 
+export const useAuth = () => {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider')
+  }
+  return context
+}
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  // a function that checks if user is logged in
+  const [loading, setLoading] = useState(true) // ADD THIS LINE
+
   const checkAuth = async () => {
     try {
       const response = await axios.get(`${url}/me`, {
@@ -21,17 +28,20 @@ export const AuthProvider = ({ children }) => {
       console.log(err)
       setUser(null)
       setIsAuthenticated(false)
+    } finally {
+      setLoading(false) // ADD THIS LINE -非常重要
     }
   }
-  // run once when app starts
+
   useEffect(() => {
     checkAuth()
   }, [])
+
   const login = (userData) => {
     setUser(userData)
     setIsAuthenticated(true)
   }
-  // logging out
+
   const logout = async () => {
     try {
       await axios.post(`${url}/logout`, {}, { withCredentials: true })
@@ -43,10 +53,10 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout, loading }}> {/* ADD loading here */}
       {children}
-    </AuthContext.Provider>)
-
+    </AuthContext.Provider>
+  )
 }
 
 

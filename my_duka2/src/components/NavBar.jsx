@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import {
   FaHome,
   FaTachometerAlt,
@@ -9,30 +9,49 @@ import {
   FaCashRegister,
   FaSignInAlt,
   FaUserPlus,
-  FaStore
 } from 'react-icons/fa'
 
 const NavBar = () => {
-  const { user, isAuthenticated, logout } = useAuth()
+  const { user, isAuthenticated, logout, loading } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  
   const handleLogout = async () => {
     await logout()
     navigate('/login')
   }
+
+  // Don't show the full navbar on login/register pages (optional)
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register'
+  
+  if (loading) {
+    return (
+      <nav className='bg-gray-400 p-4'>
+        <div className='flex items-center justify-between'>
+          <Link to='/' className='text-xl font-bold text-gray-100 no-underline'>
+            MYDUKA
+          </Link>
+          <div className="text-white">Loading...</div>
+        </div>
+      </nav>
+    )
+  }
+  
   return (
-    <nav className='bg-gray-300 p-4'>
+    <nav className='bg-gray-400 p-4'>
       <div className='flex items-center justify-between'>
         <div>
-          <Link to='/' className='flex items-center gap-2 text-xl font-bold text-gray-800 no-underline'>
-            <FaStore />
-            MyDuka
+          <Link to='/' className='flex items-center gap-2 text-xl font-bold text-gray-100 no-underline'>
+            MYDUKA
           </Link>
         </div>
         <div className='flex gap-6'>
+          {/* Home link - always visible */}
           <Link to='/' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition no-underline'>
             <FaHome /> Home
           </Link>
 
+          {/* Only show these links if authenticated */}
           {isAuthenticated && (
             <>
               <Link to='/dashboard' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
@@ -52,6 +71,8 @@ const NavBar = () => {
               </Link>
             </>
           )}
+          
+          {/* Show login/register or user info based on auth status */}
           {!isAuthenticated ? (
             <>
               <Link to='/login' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
@@ -61,18 +82,26 @@ const NavBar = () => {
               <Link to='/register' className='flex items-center gap-2 text-gray-800 hover:text-blue-600 transition'>
                 <FaUserPlus /> Register
               </Link>
-            </>) : (
+            </>
+          ) : (
             <>
-              <span> {user.email}</span>
-              <button onClick={handleLogout} className='bg-red-600 text-white rounded'> Logout </button>
+              <span className="text-gray-800">
+                {user?.email || 'User'}
+              </span>
+              <button 
+                onClick={handleLogout} 
+                className='bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition'
+              >
+                Logout
+              </button>
             </>
           )}
-
         </div>
-
       </div>
     </nav>
   )
 }
 
 export default NavBar
+// localStorage.clear()
+// sessionStorage.clear()
