@@ -46,22 +46,21 @@ export const RegisterForm = () => {
 
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-          {/* Title */}
+          
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-indigo-600">Create Account</h1>
             <p className="text-gray-400 mt-2 text-sm">Sign up to get started</p>
           </div>
 
-          {/* Error Message */}
+
           {error && (
             <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
               {error}
             </div>
           )}
 
-          {/* Form */}
+          
           <form className="space-y-4" onSubmit={handleSubmit}>
-            {/* Name */}
             <input
               type="text"
               placeholder="Full Name"
@@ -71,8 +70,6 @@ export const RegisterForm = () => {
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
-
-            {/* Phone */}
             <input
               type="tel"
               placeholder="Phone Number"
@@ -82,8 +79,6 @@ export const RegisterForm = () => {
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
-
-            {/* Email */}
             <input
               type="email"
               placeholder="Email Address"
@@ -93,8 +88,6 @@ export const RegisterForm = () => {
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
-
-            {/* Password */}
             <input
               type="password"
               placeholder="Password"
@@ -104,8 +97,6 @@ export const RegisterForm = () => {
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
-
-            {/* Button */}
             <button
               type="submit"
               disabled={loading}
@@ -114,8 +105,6 @@ export const RegisterForm = () => {
               {loading ? 'Creating Account...' : 'Register'}
             </button>
           </form>
-
-          {/* Login Link */}
           <p className="text-center text-sm text-gray-400 mt-6">
             Already have an account?
             <span

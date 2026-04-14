@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       setLoading(true)
-      // Direct axios call for verification (or create another service if you want)
       const response = await axios.get(`${url}/me`, {
         withCredentials: true
       })
@@ -46,11 +45,9 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      // Using your registerService
       const res = await registerService(userData)
 
       if (res) {
-        // After successful registration, log the user in
         const loginResult = await login(userData.email, userData.password)
         if (loginResult.success) {
           return { success: true }
