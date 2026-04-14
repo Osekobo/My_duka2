@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { createContext, useEffect, useState, useContext } from 'react'
+import { useNavigate } from "react-router-dom";
+import { registerService } from '../services/registerService';
 
 const url = import.meta.env.VITE_API_URL
 const AuthContext = createContext()
@@ -15,45 +17,112 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [loading, setLoading] = useState(true) // ADD THIS LINE
+  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate();
 
   const checkAuth = async () => {
     try {
+      setLoading(true)
+      // Direct axios call for verification (or create another service if you want)
       const response = await axios.get(`${url}/me`, {
         withCredentials: true
       })
-      setUser(response.data)
-      setIsAuthenticated(true)
+
+      if (response.data.email) {
+        setUser(response.data)
+        setIsAuthenticated(true)
+        if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
+          navigate("/dashboard");
+        }
+      }
     } catch (err) {
-      console.log(err)
+      console.log("Not authenticated:", err.response?.status)
       setUser(null)
       setIsAuthenticated(false)
     } finally {
-      setLoading(false) // ADD THIS LINE -非常重要
+      setLoading(false)
     }
   }
+
+  const register = async (userData) => {
+    try {
+      // Using your registerService
+      const res = await registerService(userData)
+
+      if (res) {
+        // After successful registration, log the user in
+        const loginResult = await login(userData.email, userData.password)
+        if (loginResult.success) {
+          return { success: true }
+        }
+        return { success: false, error: "Registration succeeded but login failed" }
+      }
+    } catch (err) {
+      console.error("Registration error:", err.response?.data)
+      let errorMessage = "Registration failed"
+
+      if (err.response?.data?.detail) {
+        errorMessage = err.response.data.detail
+      } else if (err.response?.data) {
+        errorMessage = JSON.stringify(err.response.data)
+      }
+
+      return {
+        success: false,
+        error: errorMessage
+      }
+    }
+  }
+
+  const login = async (email, password) => {
+    try {
+      const response = await axios.post(`${url}/login`,
+        { email, password },
+        { withCredentials: true }
+      )
+
+      if (response.status === 200) {
+        const userResponse = await axios.get(`${url}/me`, {
+          withCredentials: true
+        })
+        setUser(userResponse.data)
+        setIsAuthenticated(true)
+        navigate("/dashboard")
+        return { success: true }
+      }
+    } catch (err) {
+      console.error("Login error:", err.response?.data)
+      return {
+        success: false,
+        error: err.response?.data?.detail || "Login failed"
+      }
+    }
+  }
+
+  const logout = async () => {
+    try {
+      await axios.post(`${url}/logout`, {}, { withCredentials: true });
+    } catch (err) {
+      console.error(err);
+    }
+    setUser(null);
+    setIsAuthenticated(false);
+    navigate("/login")
+  };
 
   useEffect(() => {
     checkAuth()
   }, [])
 
-  const login = (userData) => {
-    setUser(userData)
-    setIsAuthenticated(true)
-  }
-
-  const logout = async () => {
-    try {
-      await axios.post(`${url}/logout`, {}, { withCredentials: true })
-    } catch (err) {
-      console.error(err)
-    }
-    setUser(null)
-    setIsAuthenticated(false)
-  }
-
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout, loading }}> {/* ADD loading here */}
+    <AuthContext.Provider value={{
+      user,
+      isAuthenticated,
+      login,
+      logout,
+      register,
+      loading
+    }}>
       {children}
     </AuthContext.Provider>
   )

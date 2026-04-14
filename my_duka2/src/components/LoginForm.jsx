@@ -9,7 +9,7 @@ const LoginForm = () => {
     const success = await handleSubmit(e)
 
     if (success) {
-      navigate("/products")
+      navigate("/dashboard")
     }
   }
   return (
